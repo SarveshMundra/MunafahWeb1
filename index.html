@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Munafah - Business Management Solution</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Zen+Dots&display=swap" rel="stylesheet">
+
+    <!-- GSAP Animation Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <!-- Our CSS -->
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/hero.css">
+    <link rel="stylesheet" href="css/features.css">
+    <link rel="stylesheet" href="css/platform.css">
+</head>
+<body>
+
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.59/build/spline-viewer.js"></script>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+        <!-- Base Layer: Video -->
+        <!--<div class="background-video-container">
+            <video class="background-video" autoplay loop muted>
+                <source src="media/herovideo.mp4" type="video/mp4">
+                <source src="https://github.com/SarveshMundra/MunafahWeb/raw/refs/heads/main/Media/herovideo.mp4">
+            </video>
+        </div>-->
+        <!-- Second Layer: Orbs -->
+        <div class="background-orbs">
+            <div class="orb orb-1"></div>
+            <div class="orb orb-2"></div>
+        </div>
+
+        <!-- Third Layer: Grid -->
+        <div class="grid-overlay">
+            <!-- Grid cells will be added by JavaScript -->
+        </div>
+
+        <!-- Top Layer: Content -->
+        <div class="hero-content">
+            <h1 id="hero-title">
+                <span class="letter">M</span>
+                <span class="letter">U</span>
+                <span class="letter">N</span>
+                <span class="letter">A</span>
+                <span class="letter">F</span>
+                <span class="letter">A</span>
+                <span class="letter">H</span>
+            </h1>
+            <p id="hero-tagline">Streamline your business operations with our all-in-one management solution.</p>
+        </div>
+
+        <div class="scroll-indicator">
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+
+
+<!-- Features Section -->
+<section id="features" class="features-section">
+    <div class="features-grid">
+        <!-- Sales Management Card -->
+        <div class="feature-card" id="sales-feature">
+            <div class="feature-background">
+                <img src="images/2.png" alt="Sales Management Background" />
+            </div>
+            <div class="card-content">
+                <h1>Sales Management</h1>
+                <p>Streamline your sales process with integrated order management, invoicing, and customer tracking.</p>
+                <!-- <ul class="feature-list">
+                    <li>Easiest Order Processing</li>
+                    <li>Track Orders E2E</li>
+                    <li>Smart Invoicing</li>
+                    <li>Sales Analytics</li>
+                    <li>Payment Integration</li>
+                </ul> -->
+            </div>
+        </div>
+
+        <!-- Inventory Control Card -->
+        <div class="feature-card" id="inventory-feature">
+            <div class="feature-background">
+                <img src="images/3.png" alt="Inventory Control Background" />
+            </div>
+            <div class="card-content">
+                <h3>Inventory Control</h3>
+                <p>Real-time stock tracking, automated reordering, and warehouse management all in one place.</p>
+                <!-- <ul class="feature-list">
+                    <li>Real-time Stock Tracking</li>
+                    <li>Automated Reordering</li>
+                    <li>Warehouse Management</li>
+                    <li>Inventory Analytics</li>
+                    <li>Barcode Integration</li>
+                </ul> -->
+            </div>
+        </div>
+
+        <!-- Customer Management Card -->
+        <div class="feature-card" id="customer-feature">
+            <div class="feature-background">
+                <img src="images/4.png" alt="Customer Management Background" />
+            </div>
+            <div class="card-content">
+                <h3>Customer Management</h3>
+                <p>Build lasting relationships with comprehensive customer profiles and communication history.</p>
+                <!-- <ul class="feature-list">
+                    <li>Customer Profiles</li>
+                    <li>Communication History</li>
+                    <li>Customer Support</li>
+                    <li>Feedback Management</li>
+                    <li>Loyalty Programs</li>
+                </ul> -->
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Platform Section -->
+    <section class="cross-platform-section" id="platforms">
+        <!-- Add Video Background -->
+        <!-- <div class="platform-video-container">
+            <video class="platform-video" autoplay loop muted playsinline>
+                <source src="media/platformV3.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div> -->
+
+        <div class="platform-image-container">
+            <img src="images/1.png" alt="Platform Background" class="platform-image">
+        </div>
+    
+        <h2 id="platform-heading">ANY DEVICE</h2>
+        <p id="platform-tagline">Exact same flow on any device you pick.</p>
+
+    </section>
+
+
+
+
+
+    <!-- Our JavaScript -->
+    <script src="js/grid-setup.js"></script>
+    <script src="js/landing-animations.js"></script>
+    <!--<script src="js/fullpage-scroll.js"></script>-->
+</body>
+</html>

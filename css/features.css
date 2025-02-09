@@ -1,0 +1,132 @@
+/* Features Section Base */
+.features-section {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
+    z-index: 1;  /* Lower than hero section */
+}
+
+/* Feature Cards Container */
+.features-grid {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+
+/* Feature Card Base Styles */
+.feature-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    opacity: 0;
+    visibility: hidden;
+    will-change: transform;
+}
+
+.feature-card.gsap-initialized {
+    visibility: visible;
+}
+
+/* Background Image Container */
+.feature-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+.feature-background img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Card Content Styles */
+.card-content {
+    position: absolute;
+    z-index: 2;
+    top: 20%;
+    left: 80%;
+    transform: translate(-50%, -50%);
+    padding: 2rem;
+    color: white;
+    text-align: center;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 0px 20px rgb(255, 255, 255);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 600px;
+
+}
+
+/* Feature Card Content Styles */
+.feature-card h1, 
+.feature-card h3 {
+    font-family: 'Zen Dots';
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.feature-card p {
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    margin-bottom: 1rem;
+    font-family: 'Zen Dots';
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Feature List Styles */
+.feature-list {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.feature-list li {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0;
+    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+}
+
+/* Transition to Platform Section */
+.features-section::after {
+    content: '';
+    position: absolute;
+    display: none;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: #000;
+    transform: translateY(100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-content {
+        width: 95%;
+        padding: 1.5rem;
+    }
+
+    .feature-card h1,
+    .feature-card h3 {
+        font-size: clamp(2rem, 4vw, 3rem);
+    }
+
+    .feature-card p {
+        font-size: 1rem;
+    }
+
+    .feature-list li {
+        font-size: 0.9rem;
+        margin: 0.4rem 0;
+    }
+}

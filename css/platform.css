@@ -1,0 +1,110 @@
+.cross-platform-section {
+    height: 100vh;
+    width: 100vw;
+    /* Removing the background image */
+    /* background: url('../images/onlinepay.jpg'); */
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+
+}
+
+/* New Video Background Container */
+.platform-video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 1;  /* Making video slightly transparent */
+}
+
+.platform-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;  /* This ensures the video covers the entire container */
+}
+
+
+/* New Image Background Container */
+.platform-image-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 1;
+}
+
+.platform-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#platform-heading {
+    font-family: 'Zen Dots';
+    font-size: clamp(2rem, 5vw, 5rem);
+    color: white;
+    margin-bottom: 30px;
+    opacity: 0;
+    transform: translateY(-50px);
+    position: relative;
+    z-index: 2;
+    top: 7%;
+    right: 25%;
+}
+
+#platform-tagline {
+    font-family: 'Zen Dots';
+    font-size: clamp(1.5rem, 2.5vw, 2.5rem);
+    color: white;
+    opacity: 0;
+    transform: translateY(-30px);
+    position: relative;
+    z-index: 2;
+    top: 75%;
+    left: 10%;
+    margin: 0 50px;
+}
+
+
+/* Responsive styles for #platform-heading and #platform-tagline */
+@media (max-width: 1024px) {
+    #platform-heading {
+        top: 5%;
+        right: 25%;
+    }
+
+    #platform-tagline {
+        top: 75%;
+        left: 8%;
+    }
+}
+
+@media (max-width: 768px) {
+    #platform-heading {
+        top: 0%;
+        right: 3%;
+    }
+
+    #platform-tagline {
+        top: 75%;
+        left: 5%;
+    }
+}
+
+@media (max-width: 480px) {
+    #platform-heading {
+        top: 20%;
+        right: 2%;
+    }
+
+    #platform-tagline {
+        top: 60%;
+        left: 3%;
+    }
+}
+

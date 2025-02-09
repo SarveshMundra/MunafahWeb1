@@ -1,0 +1,196 @@
+/* Hero Section Base */
+
+
+.hero-section {
+    min-height: 100vh;
+    width: 100%;
+    position: relative;
+    overflow: hidden;
+    background-color: black;
+}
+
+/* Layer 1: Video Background */
+/*.background-video-container {
+    position: fixed;*/ /* Changed from absolute to fixed */
+    /*top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 1;
+    opacity: .5;
+}
+
+.background-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}*/
+
+/* Layer 2: Background Orbs */
+.background-orbs {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(5px);
+}
+
+.orb-1 {
+    width: 500px;
+    height: 500px;
+    top: 10%;
+    left: 5%;
+    background: rgba(128, 170, 255, 0.8);
+    transform: translate(0, 0);
+    transition: transform 0.3s ease-out;
+}
+
+.orb-2 {
+    width: 450px;
+    height: 450px;
+    bottom: 15%;
+    right: 2%;
+    background: rgba(255, 255, 0, 0.6);
+}
+
+/* Layer 3: Grid Overlay */
+.grid-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-auto-rows: 200px;
+    gap: 20px;
+    z-index: 3;
+    padding: 20px;
+    margin: 0;
+}
+
+.grid-cell {
+    backface-visibility: hidden;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(90px);
+    border: 5px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Layer 4: Main Content */
+.hero-content {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center;
+    padding-top: 40px; /* Add padding to the top */
+}
+
+#hero-title {
+    font-family: 'Zen Dots';
+    font-size: clamp(2rem, 8vw, 20rem);
+    letter-spacing: 0em;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.1em;
+    padding: 20px;
+}
+
+    #hero-title .letter {
+        /* background: linear-gradient(45deg, #4A00E0, #8E2DE2, #FF0080); */
+        background: linear-gradient(45deg, #FFFFFF, #ffffff, #676768); /* Adjusted gradient */
+        /* background: white; */
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        opacity: 0;
+        transform: translate(100vw, -100vh);
+        display: inline-block;
+    }
+
+#hero-tagline {
+    font-family: 'Zen Dots';
+    font-size: 2rem;
+    color: rgb(192, 190, 190);
+    margin-top: 2rem; /* Add margin to the top */
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    padding: 1rem;
+    opacity: 0;
+}
+
+
+/* Scroll Indicator */
+.scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 4;
+}
+
+.scroll-arrow {
+    width: 30px;
+    height: 30px;
+    border: 2px solid #4a5568;
+    border-left: 0;
+    border-top: 0;
+    transform: rotate(45deg);
+    animation: bounce 2s infinite;
+}
+
+/* Animations */
+@keyframes bounce {
+    0%, 100% {
+        transform: rotate(45deg) translate(-5px, -5px);
+    }
+
+    50% {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #hero-tagline {
+        font-size: 1.2rem;
+    }
+
+    .grid-overlay {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        grid-auto-rows: 120px;
+        gap: 10px;
+    }
+
+    .orb-1 {
+        width: 300px;
+        height: 300px;
+    }
+
+    .orb-2 {
+        width: 250px;
+        height: 250px;
+    }
+}
+
+@media (max-width: 480px) {
+    #hero-tagline {
+        font-size: 1rem;
+    }
+}
