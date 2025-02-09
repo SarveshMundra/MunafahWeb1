@@ -103,62 +103,67 @@ function initFeaturesAnimations() {
     // Get all feature cards
     const cards = gsap.utils.toArray('.feature-card');
     
-    // Pin setup with adjusted scroll length
+    // Pin setup with modified trigger points
     ScrollTrigger.create({
         trigger: '.features-section',
-        start: 'top top',
-        end: '+=200%',  // Reduced from 300% to 200% to decrease extra scroll space
+        start: 'top top',   // When the top of features section hits the top of viewport
+        end: '+=300%',    // ADJUST: Total scroll length
         pin: true,
-        anticipatePin: 1  // Helps prevent jittery pin behavior
+        markers: true,
+        anticipatePin: 1
     });
 
     // Initialize cards
     cards.forEach((card, index) => {
         card.classList.add('gsap-initialized');
         
-        // Set initial positions
+        // Set initial card positions
         gsap.set(card, {
             xPercent: index === 0 ? 0 : 100,
             opacity: index === 0 ? 1 : 0
         });
 
-        // Initialize headings
+        // Initialize headings - Set their starting position FROM TOP
         const headings = card.querySelectorAll('.heading-left, .heading-right');
         gsap.set(headings, {
-            y: 50,
+            y: -250,  // ADJUST: Negative value makes it start from top
             opacity: 0
         });
     });
 
-    // Main timeline
+    // Main timeline with modified trigger points
     const mainTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.features-section',
-            start: 'top top',
-            end: '+=200%',
-            scrub: 1.5,  // Increased from 1 to 1.5 for smoother transitions
+            start: 'top 40%',  // When the top of features section hits the center of viewport
+            end: '+=300%',
+            scrub: 5,     // ADJUST: Smoothness of animation (0.5 to 2.0)
             onUpdate: (self) => {
-                // Calculate current card based on scroll progress
                 const progress = self.progress;
-                const currentCardIndex = Math.floor(progress * 2);  // Adjusted for 3 cards
+                // Calculate current card index (0, 1, or 2)
+                const currentCardIndex = Math.floor(progress * 2);
                 
-                // Update headings
+                // Animate headings with modified trigger point
                 cards.forEach((card, index) => {
                     const headings = card.querySelectorAll('.heading-left, .heading-right');
                     
                     if (index === currentCardIndex) {
+                        // Start animation immediately when card becomes active
                         gsap.to(headings, {
-                            y: 0,
+                            y: 0,           // Move to original position
                             opacity: 1,
-                            duration: 0.75,  // Slightly increased duration
-                            stagger: 0.3,    // Increased stagger for more noticeable effect
-                            ease: 'power2.out'
+                            duration: 2,   // ADJUST: Speed of heading animation
+
+                            ease: 'power3.out',  // ADJUST: Animation easing
+                            // Immediate animation
+                            immediateRender: true
                         });
                     } else {
+                        // Reset headings position to top
                         gsap.to(headings, {
-                            y: 50,
+                            y: -250,        // ADJUST: Should match initial y value
                             opacity: 0,
-                            duration: 0.5
+                            duration: 0.8
                         });
                     }
                 });
@@ -166,38 +171,53 @@ function initFeaturesAnimations() {
         }
     });
 
-    // Card transitions with longer pauses
+    // Card transitions
     cards.forEach((card, i) => {
         if (i !== 0) {
-            // Add longer pause before transition
-            mainTl.to({}, { duration: 1 });  // Increased pause duration
+            // Pre-transition pause for card 2 & 3. 
+            mainTl.to({}, { 
+                duration: 5  // ADJUST: Pause length before transition
+            });
 
-            // Transition animation
+            // Card transition animation higher the number slower the card moves in and out of view.
             mainTl
                 .to(cards[i - 1], {
                     xPercent: -100,
                     opacity: 0,
-                    duration: 1.5  // Increased duration
+                    duration: 15
                 })
                 .to(card, {
                     xPercent: 0,
                     opacity: 1,
-                    duration: 1.5  // Increased duration
-                }, '<');
+                    duration: 15
+                }, '<');  // Synchronize animations
 
-            // Add longer pause after transition
-            mainTl.to({}, { duration: 1 });  // Increased pause duration
+            // Post-transition pause
+            mainTl.to({}, { 
+                duration: 5 // ADJUST: Pause length after transition
+            });
+        } else {
+            // Adjust the pre-transition pause for the first card
+            mainTl.to({}, { 
+                duration: 6  // Increase pause length before transition for the first card
+            });
+
+            // Adjust the post-transition pause for the first card
+            mainTl.to({}, { 
+                duration: 6  // Increase pause length after transition for the first card
+            });
         }
     });
 }
 
-// ANIMATION ADJUSTMENT GUIDE:
-// 1. Heading starting position: Change y: -250 (bigger number = starts higher)
-// 2. Heading animation timing: Adjust duration: 0.75 in the heading animation
-// 3. Delay between headings: Change stagger: 0.8 (bigger = more delay)
-// 4. Overall smoothness: Adjust scrub: 1.5 (bigger = smoother but more delay)
-// 5. Section pauses: Change duration: 1 in the pause sections
-// 6. Card transition speed: Modify duration: 1.5 in the card transitions
+// Animation Adjustment Guide:
+// 1. Starting Position: Change y: -250 to adjust how far from top headings start
+// 2. Animation Speed: Modify duration: 1.2 for heading animations
+// 3. Heading Delay: Adjust stagger: 0.8 for time between headings
+// 4. Overall Smoothness: Change scrub: 1.5 (higher = smoother but more delayed)
+// 5. Transition Timing: Modify duration: 1.2 in pause sections
+// 6. Card Animation: Adjust duration: 1.5 in card transitions
+
 
 
 
