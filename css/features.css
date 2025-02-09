@@ -26,7 +26,6 @@
     height: 100vh;
     opacity: 0;
     visibility: hidden;
-    will-change: transform;
 }
 
 .feature-card.gsap-initialized {
@@ -49,84 +48,57 @@
     object-fit: cover;
 }
 
-/* Card Content Styles */
-.card-content {
-    position: absolute;
+/* Heading Container Styles */
+.heading-container {
+    position: absolute;  /* Change from relative to absolute */
+    bottom: 0;          /* Position at bottom */
+    left: 0;           /* Align to left edge */
+    width: 100%;
     z-index: 2;
-    top: 20%;
-    left: 80%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: space-between;    
     padding: 2rem;
-    color: white;
-    text-align: center;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 0px 20px rgb(255, 255, 255);
-    border-radius: 20px;
-    width: 100%;
-    max-width: 600px;
+
 
 }
 
-/* Feature Card Content Styles */
-.feature-card h1, 
-.feature-card h3 {
+.heading-left, .heading-right {
+    padding: 1rem;
+
+}
+
+.heading-right {
+    text-align: right;  
+}
+
+.heading-left h1, 
+.heading-right h1 {
     font-family: 'Zen Dots';
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    margin-bottom: 1rem;
+    font-size: clamp(2rem, 4vw, 3.5rem);
     color: white;
-}
-
-.feature-card p {
-    font-size: clamp(1rem, 2vw, 1.2rem);
-    margin-bottom: 1rem;
-    font-family: 'Zen Dots';
-    color: rgba(255, 255, 255, 0.8);
-}
-
-/* Feature List Styles */
-.feature-list {
-    list-style: none;
-    padding: 0;
-    margin: 1rem 0;
-}
-
-.feature-list li {
-    color: rgba(255, 255, 255, 0.9);
-    margin: 0.5rem 0;
-    font-size: clamp(0.9rem, 1.5vw, 1.1rem);
-}
-
-/* Transition to Platform Section */
-.features-section::after {
-    content: '';
-    position: absolute;
-    display: none;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100vh;
-    background: #000;
-    transform: translateY(100%);
+    margin: 0;
 }
 
 /* Responsive Design */
 @media (max-width: 768px) {
-    .card-content {
-        width: 95%;
+    .heading-container {
+        flex-direction: column;
+        align-items: center;
+        padding-top: 3rem;
+        height: 100vh;  /* Full height for vertical spacing */
+    }
+
+    .heading-left {
+        margin-bottom: auto;  /* Push to top */
+    }
+
+    .heading-right {
+        margin-top: auto;  /* Push to bottom */
+        margin-bottom: 3rem;  /* Space from bottom */
+    }
+
+    .heading-left, .heading-right {
+        width: 90%;
         padding: 1.5rem;
-    }
-
-    .feature-card h1,
-    .feature-card h3 {
-        font-size: clamp(2rem, 4vw, 3rem);
-    }
-
-    .feature-card p {
-        font-size: 1rem;
-    }
-
-    .feature-list li {
-        font-size: 0.9rem;
-        margin: 0.4rem 0;
     }
 }

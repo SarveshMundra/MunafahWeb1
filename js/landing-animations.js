@@ -101,54 +101,124 @@ function initHeroAnimations() {
 
 
 function initFeaturesAnimations() {
+    // 3. Get all our feature cards
     const cards = gsap.utils.toArray('.feature-card');
     
+    // 4. Pin the entire features section
+    ScrollTrigger.create({
+        trigger: '.features-section',
+        start: 'top top',      // Pin when section reaches top
+        end: '+=300%',         // Continue for 3 full scrolls
+        pin: true,             // Enable pinning
+        anticipatePin: 1       // Prepare for pinning slightly early
+    });
+    
+    // 5. Initialize all cards
     cards.forEach((card, index) => {
+        // Make card visible once GSAP initializes it
         card.classList.add('gsap-initialized');
         
         // Set initial positions
         gsap.set(card, {
-            xPercent: index === 0 ? 0 : 100,
-            opacity: index === 0 ? 1 : 0,
-            zIndex: 10 - index
+            xPercent: index === 0 ? 0 : 100,  // First card visible, others off-screen right
+            opacity: index === 0 ? 1 : 0,      // First card visible, others invisible
+            zIndex: 10 - index                 // Stack cards properly
         });
+
+        // Set initial heading positions based on screen size
+        const headingLeft = card.querySelector('.heading-left');
+        const headingRight = card.querySelector('.heading-right');
+        
+        if (window.innerWidth > 768) {
+            // Desktop: headings start off-screen vertically
+            gsap.set(headingLeft, { y: -100, opacity: 0 });
+            gsap.set(headingRight, { y: 100, opacity: 0 });
+        } else {
+            // Mobile: headings start closer to center
+            gsap.set(headingLeft, { y: -50, opacity: 0 });
+            gsap.set(headingRight, { y: 50, opacity: 0 });
+        }
     });
 
-    // Create the main scroll timeline with adjusted spacing
+    // 6. Create the main animation timeline
     const featuresTl = gsap.timeline({
         scrollTrigger: {
             trigger: '.features-section',
-            start: 'top top',
-            end: '+=200%', // Increased from 200% to 300%
-            pin: true,
-            scrub: 1, // Increased from 0.5 to 1 for smoother transitions
-            anticipatePin: 1
+            start: 'top 50%',    // Start animations when section is 50% in view
+            end: '+=300%',       // End after 3 full scrolls
+            scrub: 1,            // Smooth scrolling animation
+            onUpdate: self => {
+                // Calculate which card should be visible
+                const progress = self.progress;
+                const totalCards = cards.length;
+                const segmentLength = 1 / (totalCards - 1);
+                const currentIndex = Math.floor(progress / segmentLength);
+                
+                // Animate headings for current card
+                const currentCard = cards[currentIndex];
+                if (currentCard) {
+                    const headingLeft = currentCard.querySelector('.heading-left');
+                    const headingRight = currentCard.querySelector('.heading-right');
+
+                    // Animate headings based on screen size
+                    gsap.to(headingLeft, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                    gsap.to(headingRight, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.5,
+                        delay: 0.2,
+                        ease: "power2.out"
+                    });
+                }
+            }
         }
     });
 
-    // Add delay between hero and first feature
-    featuresTl.to({}, { duration: 0.5 }); // Add initial pause
+    // 7. Add initial pause before first transition
+    featuresTl.to({}, { duration: 0.5 });
 
-    // Animate cards with pauses
+    // 8. Create transitions between cards
     cards.forEach((card, i) => {
-        if (i > 0) {
-            const prevCard = cards[i - 1];
+        if (i > 0) {  // Skip first card as it's already visible
+            // Slide out previous card to the left
+            featuresTl.to(cards[i - 1], {
+                xPercent: -100,
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.inOut'
+            });
 
-            featuresTl
-                .to(prevCard, {
-                    xPercent: -100,
-                    opacity: 0,
-                    duration: 1,
-                    ease: 'power2.inOut'
-                })
-                .to(card, {
-                    xPercent: 0,
-                    opacity: 1,
-                    duration: 1,
-                    ease: 'power2.inOut'
-                }, '<')
-                .to({}, { duration: 0.5 }); // Add pause after each transition
+            // Slide in current card from the right
+            featuresTl.to(card, {
+                xPercent: 0,
+                opacity: 1,
+                duration: 1,
+                ease: 'power2.inOut'
+            }, '<');  // '<' means start at same time as previous animation
+
+            // Add a pause after transition
+            featuresTl.to({}, { duration: 0.5 });
         }
+    });
+
+    // 9. Handle window resizing
+    window.addEventListener('resize', () => {
+        cards.forEach(card => {
+            const headingLeft = card.querySelector('.heading-left');
+            const headingRight = card.querySelector('.heading-right');
+            
+            // Reset positions based on screen size
+            if (window.innerWidth > 768) {
+                gsap.set([headingLeft, headingRight], { y: 0 });
+            } else {
+                gsap.set([headingLeft, headingRight], { x: 0 });
+            }
+        });
     });
 }
 
@@ -175,7 +245,7 @@ function initCrossPlatformAnimations() {
             duration: 1.5,
             delay: 0.5,
             ease: "power3.out"
-        }, "-=1"); // Overlap with the previous animation by 1 second
+        }); // Overlap with the previous animation by 1 second
         // .fromTo(".platform-video", {
         //     scale: 0.5
         // }, {
