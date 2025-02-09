@@ -100,91 +100,65 @@ function initHeroAnimations() {
 
 
 function initFeaturesAnimations() {
-    // ===============================================
-    // 1. SETUP AND ELEMENT SELECTION
-    // ===============================================
-    
-    // Get all feature cards and convert NodeList to Array for easier manipulation
-    // This looks for elements with class 'feature-card'
+    // Get all feature cards
     const cards = gsap.utils.toArray('.feature-card');
     
-    // ===============================================
-    // 2. PIN SETUP - Keeps section fixed while scrolling
-    // ===============================================
-    
-    // This makes the features section stay fixed while we scroll through it
-    // Without this, the section would scroll normally
+    // Pin setup with adjusted scroll length
     ScrollTrigger.create({
-        trigger: '.features-section',    // The section that triggers the pin
-        start: 'top top',               // Pin starts when section's top hits viewport's top
-        end: '+=300%',                  // Pin ends after scrolling 3 full viewport heights
-        pin: true                       // Enables the pin effect
+        trigger: '.features-section',
+        start: 'top top',
+        end: '+=200%',  // Reduced from 300% to 200% to decrease extra scroll space
+        pin: true,
+        anticipatePin: 1  // Helps prevent jittery pin behavior
     });
 
-    // ===============================================
-    // 3. CARD INITIALIZATION
-    // ===============================================
-    
-    // Set up each card's initial state
+    // Initialize cards
     cards.forEach((card, index) => {
-        // Make card visible (removes initial hidden state from CSS)
         card.classList.add('gsap-initialized');
         
-        // Set starting positions for cards:
-        // - First card (index 0) starts visible in center
-        // - Other cards start off-screen to the right
+        // Set initial positions
         gsap.set(card, {
-            xPercent: index === 0 ? 0 : 100,  // 0 = center, 100 = off-screen right
-            opacity: index === 0 ? 1 : 0      // First card visible, others invisible
+            xPercent: index === 0 ? 0 : 100,
+            opacity: index === 0 ? 1 : 0
         });
 
-        // Get heading elements within this card
+        // Initialize headings
         const headings = card.querySelectorAll('.heading-left, .heading-right');
-        
-        // Set initial state for headings - start below their final position and invisible
         gsap.set(headings, {
-            y: -250,          // Start 50 pixels below final position
-            opacity: 0      // Start invisible
+            y: 50,
+            opacity: 0
         });
     });
 
-    // ===============================================
-    // 4. MAIN ANIMATION TIMELINE
-    // ===============================================
-    
-    // Create the main timeline that controls all animations
+    // Main timeline
     const mainTl = gsap.timeline({
         scrollTrigger: {
-            trigger: '.features-section',    // Section that triggers the animation
-            start: 'top 70%',               // Start at the top of the section
-            end: '+=100%',                  // End after scrolling 3 full heights
-            scrub: 1,                       // Smooth animation with 1 second catch-up
-            
-            // This function runs every time the scroll position updates
+            trigger: '.features-section',
+            start: 'top top',
+            end: '+=200%',
+            scrub: 1.5,  // Increased from 1 to 1.5 for smoother transitions
             onUpdate: (self) => {
-                // Calculate which card should be visible based on scroll position
-                const progress = self.progress;           // 0 to 1 (scroll progress)
-                const currentCardIndex = Math.floor(progress * 3); // Convert to 0, 1, or 2
+                // Calculate current card based on scroll progress
+                const progress = self.progress;
+                const currentCardIndex = Math.floor(progress * 2);  // Adjusted for 3 cards
                 
-                // Update heading animations for all cards
+                // Update headings
                 cards.forEach((card, index) => {
-                    // Get headings for this card
                     const headings = card.querySelectorAll('.heading-left, .heading-right');
                     
                     if (index === currentCardIndex) {
-                        // If this is the current card, animate headings in
                         gsap.to(headings, {
-                            y: 0,               // Move to final position
-                            opacity: 1,         // Fade in
-                            duration: 1,      // Animation takes 0.5 seconds
-                            stagger: 0.5,       // 0.2 second delay between each heading
-                            ease: 'power2.out'  // Smooth easing function
+                            y: 0,
+                            opacity: 1,
+                            duration: 0.75,  // Slightly increased duration
+                            stagger: 0.3,    // Increased stagger for more noticeable effect
+                            ease: 'power2.out'
                         });
                     } else {
-                        // If not current card, reset headings to initial state
-                        gsap.set(headings, {
-                            y: -250,
-                            opacity: 0
+                        gsap.to(headings, {
+                            y: 50,
+                            opacity: 0,
+                            duration: 0.5
                         });
                     }
                 });
@@ -192,68 +166,40 @@ function initFeaturesAnimations() {
         }
     });
 
-    // ===============================================
-    // 5. CARD TRANSITION ANIMATIONS
-    // ===============================================
-    
-    // Set up transitions between cards
+    // Card transitions with longer pauses
     cards.forEach((card, i) => {
-        // Skip first card since it starts visible
         if (i !== 0) {
-            // Add pause before transition (adjust this value to change pause length)
-            mainTl.to({}, { duration: 0.5 });
+            // Add longer pause before transition
+            mainTl.to({}, { duration: 1 });  // Increased pause duration
 
-            // Create the transition animation
+            // Transition animation
             mainTl
-                // Move previous card out to the left
                 .to(cards[i - 1], {
-                    xPercent: -100,     // Move off-screen left
-                    opacity: 0,         // Fade out
-                    duration: 1         // Animation duration
+                    xPercent: -100,
+                    opacity: 0,
+                    duration: 1.5  // Increased duration
                 })
-                // Move current card in from the right
                 .to(card, {
-                    xPercent: 0,        // Move to center
-                    opacity: 1,         // Fade in
-                    duration: 1         // Animation duration
-                }, '<');                // '<' means start at same time as previous animation
+                    xPercent: 0,
+                    opacity: 1,
+                    duration: 1.5  // Increased duration
+                }, '<');
 
-            // Add pause after transition (adjust this value to change pause length)
-            mainTl.to({}, { duration: 0.5 });
+            // Add longer pause after transition
+            mainTl.to({}, { duration: 1 });  // Increased pause duration
         }
     });
 }
 
+// ANIMATION ADJUSTMENT GUIDE:
+// 1. Heading starting position: Change y: -250 (bigger number = starts higher)
+// 2. Heading animation timing: Adjust duration: 0.75 in the heading animation
+// 3. Delay between headings: Change stagger: 0.8 (bigger = more delay)
+// 4. Overall smoothness: Adjust scrub: 1.5 (bigger = smoother but more delay)
+// 5. Section pauses: Change duration: 1 in the pause sections
+// 6. Card transition speed: Modify duration: 1.5 in the card transitions
 
 
-// ===============================================
-// CUSTOMIZATION GUIDE
-// ===============================================
-// To modify the animations, here are the key values you can adjust:
-//
-// 1. Card Transition Speed:
-//    Find: duration: 1
-//    This controls how long it takes for cards to slide in/out
-//
-// 2. Pause Duration:
-//    Find: duration: 0.5 (in the pause sections)
-//    This controls how long the animation pauses between transitions
-//
-// 3. Heading Animation Speed:
-//    Find: duration: 0.5 (in the onUpdate section)
-//    This controls how fast the headings animate in
-//
-// 4. Heading Stagger:
-//    Find: stagger: 0.2
-//    This controls the delay between left and right heading animations
-//
-// 5. Initial Heading Position:
-//    Find: y: 50
-//    This controls how far below their final position the headings start
-//
-// 6. Scroll Smoothness:
-//    Find: scrub: 1
-//    Lower values = faster response to scroll, higher = smoother but more delay
 
 function initCrossPlatformAnimations() {
     const timeline = gsap.timeline({
